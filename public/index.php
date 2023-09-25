@@ -1,4 +1,27 @@
 <?php
+if (!function_exists('dd')) {
+
+  function dd(mixed $data):void
+  {
+      echo "<pre style='background:#1d1d1d; color: greenyellow; position:absolute; left: 0; top: 0; z-index: 9999999; width: 100%; height: 600px'>";
+      print_r($data);
+      echo '<pre>';
+      die();
+  }
+
+}
+
+if (!function_exists('d')) {
+
+ function d(mixed $data):void
+  {
+      echo "<pre style='background:#1d1d1d; color: greenyellow; position:absolute; left: 0; top: 0; z-index: 9999999; width: 100%; height: 600px'>";
+      print_r($data);
+      echo '<pre>';
+  }
+
+}
+
 ob_start(); // For the "remember session"...
 
 // Directories...
@@ -8,6 +31,8 @@ define("WEB", ROOT . 'public' . DIRECTORY_SEPARATOR);
 define('SETTING', require ROOT.'settings.php');
 define('LAN_OVERRIDE', require ROOT.'lang-override.php');
 define('Errors', ROOT.'errors.php');
+
+
 
 define('URL_PROTOCOL', ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://"));
 define('URL_DOMAIN', $_SERVER['HTTP_HOST']);
@@ -40,7 +65,13 @@ define('API_VER', '1.0.0');
 
 define('EXT_API_KEY', 'drv6hVTTkKNtDS9y8RtUsP8jAgm9YqcVDUGrN3gFuqsdYDvKrDYfktkU4wM9C9n5');
 
-require_once "../includes.php";
-Session::start();
+//Autoload classes so we do not need to call includes every time
+spl_autoload_register(function ($class_name) {
+  include ROOT . $class_name . '.php';
+});
 
-new Application;
+
+require_once "../includes.php";
+\core\Session::start();
+
+new \core\Application;

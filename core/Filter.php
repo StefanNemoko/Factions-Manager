@@ -6,6 +6,7 @@
  *
  * This is the place to put filters, usually methods that cleans, sorts and, well, filters stuff.
  */
+namespace Core;
 
 class Filter
 {

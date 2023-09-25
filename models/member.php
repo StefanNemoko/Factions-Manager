@@ -1,5 +1,7 @@
 <?php
 
+namespace Models;
+
 class Member {
 
     public static function archive($faction, $steamid) {

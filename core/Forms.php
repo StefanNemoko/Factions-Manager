@@ -10,6 +10,7 @@
 **      - faction : Is always the first variable passed, even if it's not used...
 **      - fields : each field is then passed as a parameter in order of their apperance, even if it's not used...
 */
+namespace Core;
 
 class Forms {
 

@@ -5,6 +5,9 @@
  * Date: 15/03/2018
  * Time: 10:41 PM
  */
+
+namespace Core;
+
 class DisplayError
 {
     public function __construct($myError, $needReDirect = false)

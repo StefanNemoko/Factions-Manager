@@ -1,5 +1,7 @@
 <?php
 
+namespace Core;
+
 // Parent Controller holding any functions we may require to call from multiple different Controllers.
 class Controller {
 

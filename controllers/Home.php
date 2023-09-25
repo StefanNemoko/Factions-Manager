@@ -1,6 +1,10 @@
 <?php
 
-class Home extends Controller {
+Namespace Controllers;
+/**
+ * Summary of Home
+ */
+class Home extends \controllers\Controller {
 
     public function __construct() {
         parent::__construct(false);
@@ -9,6 +13,10 @@ class Home extends Controller {
         Controller::addCrumb(array("Dashboard", ""));
     }
 
+    /**
+     * Summary of index
+     * @return void
+     */
     public function index () {
         $params = array ();
         
@@ -17,6 +25,12 @@ class Home extends Controller {
         Controller::buildPage(array(ROOT . 'views/navbar', ROOT . 'views/dash/body'), $params);
     }
 
+    /**
+     * Summary of public
+     * @param mixed $faction
+     * @param mixed $print
+     * @return void
+     */
     public function public ($faction = null, $print = null) {
         if ($faction == null) {
             new DisplayError("#404");

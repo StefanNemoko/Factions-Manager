@@ -1,6 +1,8 @@
 <?php
 
-class API extends Controller {
+namespace Controllers;
+
+class API extends \controllers\Controller {
 
     public $internal = false; // Indicates whether we require internal "feedback"...
 

@@ -1,5 +1,7 @@
 <?php
 
+namespace Models;
+
 class Form {
 
     public static function getForm ($faction, $formID) {

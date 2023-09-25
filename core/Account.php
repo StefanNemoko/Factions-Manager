@@ -1,5 +1,7 @@
 <?php
 
+namespace Core;
+
 class Account {
 
     public static $steamid = null;

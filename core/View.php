@@ -1,13 +1,19 @@
 <?php
 
+namespace Core;
+
 // Builds our pages
 class View {
 
     public static $forms = array();
     public static $isError = false;
 
+    private $css = null;
+    private $java = null;
+
     public function __construct($files, $data = null) {
-        $title = Controller::$currentPage;
+        $oController = new Controller;
+        $title = $oController->currentPage;
         $this->css = null;
         $this->java = null;
         if ($data) {

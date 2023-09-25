@@ -1,6 +1,8 @@
 <?php
 
-class Admin extends Controller {
+namespace Controllers;
+
+class Admin extends \controllers\Controller {
 
     public function __construct() {
         parent::__construct(true);

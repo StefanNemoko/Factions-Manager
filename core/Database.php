@@ -1,5 +1,7 @@
 <?php
 
+namespace Core;
+
 class Database
 {
     private static $factory;
@@ -8,7 +10,7 @@ class Database
     public static function getFactory($forceRestart = false)
     {
         if (!self::$factory || $forceRestart) {
-            self::$factory = new Database();
+            self::$factory = new \core\Database();
         }
         return self::$factory;
     }

@@ -1,9 +1,11 @@
 <?php
 
+namespace Models;
+
 class System {
 
     public static function getSubpages ($faction) {
-        $query = Database::getFactory()->getConnection(DB_NAME)->prepare("SELECT `id`, `name`, `subdirectory`, `order`, `active` FROM subpages WHERE faction = :faction");
+        $query = \Core\Database::getFactory()->getConnection(DB_NAME)->prepare("SELECT `id`, `name`, `subdirectory`, `order`, `active` FROM subpages WHERE faction = :faction");
         $query->execute(array(":faction" => $faction));
         
         if ($query->rowCount() == 0) { return array(); } 

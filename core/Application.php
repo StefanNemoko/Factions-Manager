@@ -1,5 +1,7 @@
 <?php
 
+namespace core;
+
 class Application {
 
     private $controller = null;
@@ -10,7 +12,7 @@ class Application {
     public static $factions = array ();
 
     public function __construct() {
-        $system = new System;
+        $system = new \models\System;
         self::$factions = $system->getFactions();
 
         self::URLSetup();
@@ -54,7 +56,7 @@ class Application {
                 break;
 
             default:
-                $this->controller = new Home;
+                $this->controller = new \Controllers\Home;
                 self::actionHandle();
         }
 

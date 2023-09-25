@@ -1,6 +1,8 @@
 <?php
 
-class Faction extends Controller {
+namespace Controllers;
+
+class Faction extends \controllers\Controller {
 
     public static $var = "";
     public static $officer = null; // Contains the object for our player...

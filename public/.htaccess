@@ -5,6 +5,9 @@ Options -MultiViews
 # Activates URL rewriting (like myproject.com/Controller/action/1/2/3)
 RewriteEngine On
 
+# Set the base URL to this map
+RewriteBase /
+
 # Prevent people from looking directly into folders
 Options -Indexes
 
@@ -22,4 +25,5 @@ RewriteCond %{REQUEST_FILENAME} !-l
 # processing this .htaccess file (L).
 RewriteRule ^(.+)$ index.php?url=$1 [QSA,L]
 
-php_flag display_errors off
+
+# TODO:: remove /public from url.

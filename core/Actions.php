@@ -1,5 +1,7 @@
 <?php
 
+namespace Core;
+
 class Actions {
 
     public function insertMember($faction, $name, $steamid, $forumid, $rank, $section) {

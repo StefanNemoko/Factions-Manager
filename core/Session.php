@@ -1,5 +1,7 @@
 <?php
 
+namespace Core;
+
 class Session {
 
     // Creates a new Session to be used.
