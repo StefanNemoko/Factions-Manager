@@ -70,8 +70,7 @@ spl_autoload_register(function ($class_name) {
   include ROOT . $class_name . '.php';
 });
 
-
 require_once "../includes.php";
-\core\Session::start();
+\Core\Session::start();
 
 new \core\Application;

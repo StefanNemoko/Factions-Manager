@@ -10,7 +10,7 @@ class Actions {
 
         $rank = Application::getRankIDFromName($faction, $rank);
 
-        $query = Database::getFactory()->getConnection(DB_NAME)->prepare(
+        $query = \Core\Database::getFactory()->getConnection(DB_NAME)->prepare(
             "INSERT INTO members (faction, `name`, steamid, forumid, section, mainlevel) VALUES (:faction, :name, :steamid, :forumid, :section, :rank)"
         );
 

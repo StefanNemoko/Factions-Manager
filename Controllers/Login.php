@@ -5,21 +5,21 @@ namespace Controllers;
 class Login extends \Controllers\Controller {
 
     public function __construct() {
-        parent::__construct(false, true);
+        parent::__construct(false);
     }
 
     public function index () {
         // If action isset then time to login!
         if ((isset($_GET['_action']))) {
-            Session::remove("reason"); // Wipe this shit...
+            \Core\Session::remove("reason"); // Wipe this shit...
             Steam::OpenIDSteam();
         } else {
             $params = array (
                 'css' => array ('login.css')
             );
 
-            if (Session::get("reason")) {
-                $params['reason'] = Session::get("reason");
+            if (\Core\Session::get("reason")) {
+                $params['reason'] = \Core\Session::get("reason");
             }
 
             Controller::$currentPage = "Login";
@@ -29,8 +29,8 @@ class Login extends \Controllers\Controller {
 
     // Used for resyncing steam account details...
     public function resync() {
-        if(Account::isLoggedIn()) {
-            Steam::resync(Account::$steamid, true);
+        if(\Core\Account::isLoggedIn()) {
+            Steam::resync(\Core\Account::$steamid, true);
         } else {
             header("Location: ".URL);
         }

@@ -5,7 +5,7 @@
     <section class = "general-stats roster">
         <table class = "stats-table">
             <tr class = "first">   
-                <th COLSPAN=2><?=View::getLanguage(Faction::$var, "-stats-section-title");?></th>
+                <th COLSPAN=2><?=\Core\View::getLanguage(Faction::$var, "-stats-section-title");?></th>
             </tr>
             <?php
             foreach ($this->sections as $section) {

@@ -11,34 +11,34 @@ class Controller {
     public static $steamid = false;
 
     public function __construct($auth = true) {
-        Session::start(); // Start a Session to be used.
+        \Core\Session::start(); // Start a Session to be used.
         
         if ((isset($_GET['login']))) { exit; }
 
         // Session = Alive...
-        if (Session::get("steamid")) {
+        if (\Core\Session::get("steamid")) {
             // Cookie Revival Check...
             if (!(isset($_COOKIE['remember_token'])) || !(isset($_COOKIE['steam_id']))) {
-                $token = Accounts::setToken($player->steamid);
-                if (!$token) { Account::logout(true); exit; }
+                $token = \Models\Accounts::setToken($player->steamid);
+                if (!$token) { \Core\Account::logout(true); exit; }
 
-                setcookie("steam_id", Session::get("steamid"), time()+3600 * 24 * 365, "/");
+                setcookie("steam_id", \Core\Session::get("steamid"), time()+3600 * 24 * 365, "/");
                 setcookie("remember_token", $token, time()+3600 * 24 * 365, "/");
             }
             
             // Ensure that if the remember_token changes then we stop this session...
             if (isset($_COOKIE['remember_token'])) {
-                if (!(Accounts::checkToken(Session::get("steamid"), $_COOKIE['remember_token']))) {
-                    Account::logout(true);
+                if (!(\Models\Accounts::checkToken(\Core\Session::get("steamid"), $_COOKIE['remember_token']))) {
+                    \Core\Account::logout(true);
                     exit;
                 }
             }
         } else {
             // Session Revival Check...
             if (isset($_COOKIE['remember_token']) && isset($_COOKIE['steam_id'])) {
-                if (!(Accounts::checkToken($_COOKIE['steam_id'], $_COOKIE['remember_token']))) {
-                    Account::logout(false);
-                    Session::set("reason", "Session Expired");
+                if (!(\Models\Accounts::checkToken($_COOKIE['steam_id'], $_COOKIE['remember_token']))) {
+                    \Core\Account::logout(false);
+                    \Core\Session::set("reason", "Session Expired");
                     header ("Location: ".URL."login");
                     exit;
                 }
@@ -47,26 +47,26 @@ class Controller {
             }
         }
         
-        Account::$steamid = Session::get("steamid");
-        Account::$adminlevel = Accounts::IsAdmin(Account::$steamid);
+        \Core\Account::$steamid = \Core\Session::get("steamid");
+        \Core\Account::$adminlevel = \Models\Accounts::IsAdmin(\Core\Account::$steamid);
         
         if ($auth) {
             // Check our login...
-            if (!(Account::isLoggedIn())) {
+            if (!(\Core\Account::isLoggedIn())) {
                 header ("Location: ".URL."login"); exit;
             }
             
             // Check if we even should have access...
             $failed = true;
 
-            if (!Account::$adminlevel) {
+            if (!\Core\Account::$adminlevel) {
                 foreach (Application::$factions as $faction) {
-                    if (Factions::isMember($faction["abr"], Account::$steamid)) { $failed = false; break; };
+                    if (Factions::isMember($faction["abr"], \Core\Account::$steamid)) { $failed = false; break; };
                 };
 
                 if ($failed) {
-                    Account::logout(false); // Force session clearing...
-                    Session::set("reason", "Access Removed");
+                    \Core\Account::logout(false); // Force session clearing...
+                    \Core\Session::set("reason", "Access Removed");
                     header("Location: ".URL."login");
                 }
             };
@@ -89,7 +89,7 @@ class Controller {
     }
 
     public static function buildPage($pages = false, $data = null) {
-        new View($pages, $data);
+        new \Core\View($pages, $data);
     }
 }
 ?>

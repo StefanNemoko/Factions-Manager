@@ -48,8 +48,8 @@
             <div class = "actions">
                 <?php
                 foreach ($this->powers as $power) {
-                    if (array_key_exists($power->form, View::$forms)) {
-                        $form = View::$forms[$power->form];
+                    if (array_key_exists($power->form, \Core\View::$forms)) {
+                        $form = \Core\View::$forms[$power->form];
                         ?>
                         <a <?php if ($form->modal == 1) { 
                             ?> 

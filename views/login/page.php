@@ -6,7 +6,7 @@
         <div class = "body">
             <form method="GET" action="<?=URL?>login/">
                 <?php
-                if (Account::isLoggedIn()) {
+                if (\Core\Account::isLoggedIn()) {
                     ?>
                     <div class = "notify">Already Logged In</div>
                     <?php

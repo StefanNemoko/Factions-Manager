@@ -11,7 +11,7 @@ class Tasks {
     */
 
     public function __construct($force = false) {
-        $query = Database::getFactory()->getConnection(DB_NAME)->prepare("SELECT `value`, `time` FROM settings WHERE `name` = 'tasksrun' LIMIT 1");
+        $query = \Core\Database::getFactory()->getConnection(DB_NAME)->prepare("SELECT `value`, `time` FROM settings WHERE `name` = 'tasksrun' LIMIT 1");
         $query->execute();
 
         if ($query->rowCount() == 0) { return false; }
@@ -21,7 +21,7 @@ class Tasks {
 
         // If we're within 4 hours of run time and it's not been ran... Run it...
         if (((time() - strtotime($result->time)) <= 14400 && $result->value == 0) || $force) {
-            $update = Database::getFactory()->getConnection(DB_NAME)->prepare("UPDATE settings SET `value` = '1' WHERE `name` = 'tasksrun'");
+            $update = \Core\Database::getFactory()->getConnection(DB_NAME)->prepare("UPDATE settings SET `value` = '1' WHERE `name` = 'tasksrun'");
 
             // Tasks to run
 
@@ -31,7 +31,7 @@ class Tasks {
             }
         } else {
             if (time() - strtotime($result->time) > 14400) {
-                $update = Database::getFactory()->getConnection(DB_NAME)->prepare("UPDATE settings SET `value` = '0' WHERE `name` = 'tasksrun'");
+                $update = \Core\Database::getFactory()->getConnection(DB_NAME)->prepare("UPDATE settings SET `value` = '0' WHERE `name` = 'tasksrun'");
             }
         }
 
@@ -41,7 +41,7 @@ class Tasks {
     }
 
     public function updateLastLogins($faction) {
-        $query = Database::getFactory()->getConnection(DB_NAME)->prepare("SELECT steamid FROM members WHERE faction = :faction");
+        $query = \Core\Database::getFactory()->getConnection(DB_NAME)->prepare("SELECT steamid FROM members WHERE faction = :faction");
         $query->execute(array(":faction" => $faction));
 
         if ($query->rowCount() == 0) { return false; }
@@ -56,7 +56,7 @@ class Tasks {
             if ($lastSeen->rowCount() != 0) {
                 $officer = $lastSeen->fetch();
 
-                $update = Database::getFactory()->getConnection(DB_NAME)->prepare("UPDATE members SET last_login = :lastlogin WHERE faction = :faction AND steamid = :steamid LIMIT 1");
+                $update = \Core\Database::getFactory()->getConnection(DB_NAME)->prepare("UPDATE members SET last_login = :lastlogin WHERE faction = :faction AND steamid = :steamid LIMIT 1");
                 $update->execute(array(
                     ":faction" => $faction,
                     ":steamid" => $officer->playerid, 

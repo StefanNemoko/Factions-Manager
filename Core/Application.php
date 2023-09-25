@@ -1,6 +1,6 @@
 <?php
 
-namespace core;
+namespace Core;
 
 class Application {
 
@@ -22,7 +22,7 @@ class Application {
             self::$isDark = true;
         }
         
-        if (isset($_GET['logout'])) { Account::logout(); } // Logout...
+        if (isset($_GET['logout'])) { \Core\Account::logout(); } // Logout...
 
         switch (true) {
 

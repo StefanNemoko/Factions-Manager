@@ -7,7 +7,7 @@ class Admin extends \controllers\Controller {
     public function __construct() {
         parent::__construct(true);
 
-        if (!Accounts::IsAdmin(Account::$steamid)) {
+        if (!\Models\Accounts::IsAdmin(\Core\Account::$steamid)) {
             new DisplayError("#403");
             exit;
         };
@@ -36,7 +36,7 @@ class Admin extends \controllers\Controller {
     }
 
     public function whitelist ($faction = "apc") {
-        $query = Database::getFactory()->getConnection(DB_NAME)->prepare("SELECT steamid, mainlevel FROM members WHERE faction = :faction AND isSuspended = '0' AND isLOA = '0' AND isHoliday = '0' AND isArchive = '0'");
+        $query = \Core\Database::getFactory()->getConnection(DB_NAME)->prepare("SELECT steamid, mainlevel FROM members WHERE faction = :faction AND isSuspended = '0' AND isLOA = '0' AND isHoliday = '0' AND isArchive = '0'");
         $query->execute(array(
             ':faction' => $faction
         ));
@@ -60,7 +60,7 @@ class Admin extends \controllers\Controller {
     public function dewhitelist ($column = "coplevel") {
         $column = Filter::XSSFilter($column);
 
-        $db = Database::getFactory(true)->getConnection(DB_NAME_LIFE, array(DB_HOST_LIFE, DB_USER_LIFE, DB_PASS_LIFE), true);
+        $db = \Core\Database::getFactory(true)->getConnection(DB_NAME_LIFE, array(DB_HOST_LIFE, DB_USER_LIFE, DB_PASS_LIFE), true);
 
         if ($db) {
             $db = $db->prepare("UPDATE ".SETTING["db-player-table"]." SET ".$column." = '0'");

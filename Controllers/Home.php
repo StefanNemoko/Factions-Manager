@@ -4,7 +4,7 @@ Namespace Controllers;
 /**
  * Summary of Home
  */
-class Home extends \controllers\Controller {
+class Home extends \Controllers\Controller {
 
     public function __construct() {
         parent::__construct(false);

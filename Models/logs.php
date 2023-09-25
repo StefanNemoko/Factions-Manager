@@ -14,7 +14,7 @@ class Logs {
             return false;
         }
 
-        $db = Database::getFactory()->getConnection(DB_NAME);
+        $db = \Core\Database::getFactory()->getConnection(DB_NAME);
 
         $query = $db->prepare(
             "INSERT INTO logs (faction, member, actioner, `action`, `status`, `level`) VALUES (:faction, :member, :actioner, :action, :status, :level)"
@@ -68,7 +68,7 @@ class Logs {
             $dates = array(date('Y-m-d', strtotime('-1 week')), date('Y-m-d'));
         }
 
-        $query = Database::getFactory()->getConnection(DB_NAME)->prepare("SELECT * FROM logs WHERE faction = :faction AND ".$target." = :member AND (DATE(timestamp) > :start AND DATE(timestamp) <= :end) AND level <= :level AND hidden = 0");
+        $query = \Core\Database::getFactory()->getConnection(DB_NAME)->prepare("SELECT * FROM logs WHERE faction = :faction AND ".$target." = :member AND (DATE(timestamp) > :start AND DATE(timestamp) <= :end) AND level <= :level AND hidden = 0");
         $query->execute(array(
             ":faction" => $faction, 
             ":member" => $steamid, 
@@ -84,7 +84,7 @@ class Logs {
     ** Read it...
     */
     public static function getResponse($logid) {
-        $query = Database::getFactory()->getConnection(DB_NAME)->prepare("SELECT * FROM responses WHERE logid = :id");
+        $query = \Core\Database::getFactory()->getConnection(DB_NAME)->prepare("SELECT * FROM responses WHERE logid = :id");
         $query->execute(array(":id" => $logid));
 
         if ($query->rowCount() == 0) { return false; }

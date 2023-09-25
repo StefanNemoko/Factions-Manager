@@ -66,7 +66,7 @@ class API extends \controllers\Controller {
         }
 
         // Get DB...
-        $db = Database::getFactory(true)->getConnection(DB_NAME_LIFE, array(DB_HOST_LIFE, DB_USER_LIFE, DB_PASS_LIFE), true);
+        $db = \Core\Database::getFactory(true)->getConnection(DB_NAME_LIFE, array(DB_HOST_LIFE, DB_USER_LIFE, DB_PASS_LIFE), true);
 
         if (!$db) {
             if ($this->internal) { return false; }
@@ -107,7 +107,7 @@ class API extends \controllers\Controller {
 
         if (!$this->internal) { $this->auth($faction); } // Only required if external...
 
-        $staff = Factions::getMember($faction, Account::$steamid);
+        $staff = Factions::getMember($faction, \Core\Account::$steamid);
         if ($staff == null) {
             if ($this->internal) { return false; }
             self::return(array("result" => "fail", "reason" => "admin-not-found"));
@@ -187,7 +187,7 @@ class API extends \controllers\Controller {
             )
         );
 
-        if (!Logs::log($faction, $fields, Account::$steamid, "Unit", "Rank Changed", 0)) {
+        if (!Logs::log($faction, $fields, \Core\Account::$steamid, "Unit", "Rank Changed", 0)) {
             if ($this->internal) { return false; }
             self::return(array("result" => "fail", "reason" => "log-failed"));
             exit;
@@ -201,7 +201,7 @@ class API extends \controllers\Controller {
             }
         }
 
-        $db = Database::getFactory(true)->getConnection(DB_NAME_LIFE, array(DB_HOST_LIFE, DB_USER_LIFE, DB_PASS_LIFE), true);
+        $db = \Core\Database::getFactory(true)->getConnection(DB_NAME_LIFE, array(DB_HOST_LIFE, DB_USER_LIFE, DB_PASS_LIFE), true);
 
         if (!$db) {
             if ($this->internal) { return false; }
@@ -256,7 +256,7 @@ class API extends \controllers\Controller {
     private function auth($faction) {
         parent::__construct(true);
 
-        if (!Factions::isMember($faction, Account::$steamid)) {
+        if (!Factions::isMember($faction, \Core\Account::$steamid)) {
             return(array("result" => "fail", "reason" => "auth-failed"));
             exit;
         };

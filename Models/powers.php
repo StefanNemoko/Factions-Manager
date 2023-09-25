@@ -1,9 +1,11 @@
 <?php
 
+namespace Models;
+
 class Powers {
 
     public static function getPowers($faction, $target) {
-        $query = Database::getFactory()->getConnection(DB_NAME)->prepare("SELECT * FROM powers WHERE (faction = :faction OR faction = '') AND active = 1");
+        $query = \Core\Database::getFactory()->getConnection(DB_NAME)->prepare("SELECT * FROM powers WHERE (faction = :faction OR faction = '') AND active = 1");
         $query->execute(array(":faction" => $faction));
 
         if ($query->rowCount() == 0) { return false; }

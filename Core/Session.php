@@ -24,7 +24,7 @@ class Session {
     // Sets the data for a given key within our Session.
     // We'll also do our XSSFilter checks here.
     public static function set($key, $value) {
-        $value = Filter::XSSFilter($value);
+        $value = \Core\Filter::XSSFilter($value);
         $_SESSION[$key] = $value;
     }
 

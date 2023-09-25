@@ -1,6 +1,10 @@
 <?php
 
+namespace Models;
+
+# TODO:: check what this does and why we need it here, can we not include it somewhere else?
 require_once ROOT."openid.php";
+
 
 class Steam {
 
@@ -8,13 +12,13 @@ class Steam {
     public static function OpenIDSteam () {
 
         // If they're already logged in, why relog them in?
-        if (Account::isLoggedIn()) { 
-            Session::set("reason", "Already Logged In");
+        if (\Core\Account::isLoggedIn()) { 
+            \Core\Session::set("reason", "Already Logged In");
             header("Location: ".URL."login");
             exit; 
         }
 
-        Session::start(); // Ensure we've got a session open...
+        \Core\Session::start(); // Ensure we've got a session open...
 
         try {
             $openid = new LightOpenID(URL);
@@ -66,17 +70,17 @@ class Steam {
                 };
 
                 // If they don't have access we'll give them access if they're in a faction...
-                if (!(Accounts::IsUser($steamid)) && ($faction != null)) {
+                if (!(\Models\Accounts::IsUser($steamid)) && ($faction != null)) {
                     $entry = Factions::isMember($faction, $steamid);
 
                     if (!$entry) { self::OnFailedLogin("No User"); exit; } // What?
-                    if (!(Accounts::createSteam($player->personaname, $steamid))) { self::OnFailedLogin("Creation Failed"); exit; } // If it fails to create then it'll become "No Access"...
+                    if (!(\Models\Accounts::createSteam($player->personaname, $steamid))) { self::OnFailedLogin("Creation Failed"); exit; } // If it fails to create then it'll become "No Access"...
                 } else {
-                    if (!(Accounts::IsUser($steamid))) { self::OnFailedLogin("No Access"); exit; }
-                    if (!(Accounts::IsAdmin($steamid)) && ($faction == null)) { self::OnFailedLogin("No Access"); exit; }
+                    if (!(\Models\Accounts::IsUser($steamid))) { self::OnFailedLogin("No Access"); exit; }
+                    if (!(\Models\Accounts::IsAdmin($steamid)) && ($faction == null)) { self::OnFailedLogin("No Access"); exit; }
                 }
 
-                $token = Accounts::setToken($steamid); // Get our remember token...
+                $token = \Models\Accounts::setToken($steamid); // Get our remember token...
                 if (!$token) { self::OnFailedLogin("Token Creation Fail..."); exit; }
 
                 $steaminfo = array(
@@ -86,11 +90,11 @@ class Steam {
                     'steam-pfp-full' => $player->avatarfull
                 );
 
-                Session::set("steaminfo", $steaminfo);
-                Session::set("steamid", $steamid); // Set our steamid
+                \Core\Session::set("steaminfo", $steaminfo);
+                \Core\Session::set("steamid", $steamid); // Set our steamid
                 setcookie("steam_id", $steamid, time()+3600 * 24 * 365, "/"); // Set the cookie!
                 setcookie("remember_token", $token, time()+3600 * 24 * 365, "/"); // Set the cookie 2!
-                Accounts::updateSteam($steamid, $steaminfo);
+                \Models\Accounts::updateSteam($steamid, $steaminfo);
 
                 if($redirect) {
                     header("Location: ".URL);
@@ -109,9 +113,9 @@ class Steam {
 
 
     private static function OnFailedLogin($reason = "") {
-        Account::logout(false);
-        Session::start();
-        Session::set("reason", $reason);
+        \Core\Account::logout(false);
+        \Core\Session::start();
+        \Core\Session::set("reason", $reason);
         header("Location: ".URL."login");
     }
 

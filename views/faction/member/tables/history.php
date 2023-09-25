@@ -5,7 +5,7 @@
 <tr class = "second">   
     <!--- Details --->
     <th>Date</th>
-    <th><?=View::getLanguage($this->params["history"]['type'], "-member-log-title");?> <?=View::getLanguage(Faction::$var, "-member-title");?></th>
+    <th><?=\Core\View::getLanguage($this->params["history"]['type'], "-member-log-title");?> <?=\Core\View::getLanguage(Faction::$var, "-member-title");?></th>
     <th>Action</th>
     <th>Status</th>
     <th></th>

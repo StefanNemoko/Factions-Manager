@@ -2,7 +2,7 @@
 
 namespace Controllers;
 
-class Faction extends \controllers\Controller {
+class Faction extends \Controllers\Controller {
 
     public static $var = "";
     public static $officer = null; // Contains the object for our player...
@@ -10,13 +10,13 @@ class Faction extends \controllers\Controller {
     public function __construct($faction) {
         parent::__construct(true);
 
-        if (!Factions::isMember($faction, Account::$steamid)) {
+        if (!Factions::isMember($faction, \Core\Account::$steamid)) {
             new DisplayError("#403");
             exit;
         };
         
         self::$var = $faction;
-        self::$officer = Factions::getMember($faction, Account::$steamid);
+        self::$officer = Factions::getMember($faction, \Core\Account::$steamid);
 
         if (self::$officer->isSuspended == 1) {
             new DisplayError("#Fe011");
@@ -42,15 +42,15 @@ class Faction extends \controllers\Controller {
             Controller::$subPage = "Archive";
             $archiveValue = 1;
         } else {
-            if (!System::canAccessPage((Application::$factions[self::$var]["dbPage"])) && ($steamid != Account::$steamid)) {
-                Header("Location: ".URL.self::$var."/".Account::$steamid);
+            if (!System::canAccessPage((Application::$factions[self::$var]["dbPage"])) && ($steamid != \Core\Account::$steamid)) {
+                Header("Location: ".URL.self::$var."/".\Core\Account::$steamid);
                 exit;
             };
 
-            Controller::$subPage = View::getLanguage(self::$var, "-db-short-title");
+            Controller::$subPage = \Core\View::getLanguage(self::$var, "-db-short-title");
         }
 
-        Controller::addCrumb(array((View::getLanguage(self::$var, "-db-title")), self::$var."/"));
+        Controller::addCrumb(array((\Core\View::getLanguage(self::$var, "-db-title")), self::$var."/"));
 
         if ($steamid == null) {
             $params = array (
@@ -80,7 +80,7 @@ class Faction extends \controllers\Controller {
                         $form = Form::getForm(self::$var, $power->form);
 
                         if ($form) {
-                            View::addForm($form);
+                            \Core\View::addForm($form);
                         }
                     }
                 }
@@ -152,8 +152,8 @@ class Faction extends \controllers\Controller {
         $formInfo = explode("-", $form);
         $form = Form::getForm(self::$var, ($formInfo[0]));
 
-        Controller::$subPage = View::getLanguage(self::$var, "-db-short-title");
-        Controller::addCrumb(array((View::getLanguage(self::$var, "-db-title")), self::$var."/")); 
+        Controller::$subPage = \Core\View::getLanguage(self::$var, "-db-short-title");
+        Controller::addCrumb(array((\Core\View::getLanguage(self::$var, "-db-title")), self::$var."/")); 
 
         if (!$form || ($form->modal == 1 && !$submitted)) {
             new DisplayError("#404");

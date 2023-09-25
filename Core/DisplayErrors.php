@@ -26,7 +26,7 @@ class DisplayError
             $myError = str_replace("#", "", $myError);
             header("Location: ".URL."e/".$myError);
         } else {
-            View::$isError = true;
+            \Core\View::$isError = true;
             Controller::buildPage(array(ROOT . 'views/navbar', ROOT . 'views/system/error'), array(
                     'myError' => $myError,
                     'error_title' => $error_title,

@@ -151,7 +151,7 @@ class Forms {
                 $level = (Application::getRanks(Faction::$var)[Faction::$officer->mainlevel])->level;
             }
 
-            if (!Logs::log($faction, $fieldsArr, Account::$steamid, $form->action, $form->status, $level)) {
+            if (!Logs::log($faction, $fieldsArr, \Core\Account::$steamid, $form->action, $form->status, $level)) {
                 new DisplayError("#500");
                 exit;
             }

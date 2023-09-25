@@ -14,8 +14,8 @@ class Account {
 
     public static function logout($redirect = true) {
         // Session Handling...
-        Session::start();
-        Session::close();
+        \Core\Session::start();
+        \Core\Session::close();
 
         // Cookie Clearing...
         unset($_COOKIE['steam_id']);

@@ -23,7 +23,7 @@ class System {
     }
 
     public static function canAccessPage($pageID) {
-        if (!Account::isLoggedIn()) { return false; } // Must be logged in...
+        if (!\Core\Account::isLoggedIn()) { return false; } // Must be logged in...
 
         $member = Faction::$officer;
         if ($member == null) { return false; } // Wtf??
@@ -38,7 +38,7 @@ class System {
     }
 
     public static function getFactions () {
-        $query = Database::getFactory()->getConnection(DB_NAME)->prepare("SELECT * FROM factions");
+        $query = \Core\Database::getFactory()->getConnection(DB_NAME)->prepare("SELECT * FROM factions");
         $query->execute();
         
         if ($query->rowCount() == 0) { new DisplayError('#Fe005'); exit; } 
@@ -67,7 +67,7 @@ class System {
     }
 
     private static function getSections ($faction) {
-        $query = Database::getFactory()->getConnection(DB_NAME)->prepare("SELECT * FROM sections WHERE faction = :faction");
+        $query = \Core\Database::getFactory()->getConnection(DB_NAME)->prepare("SELECT * FROM sections WHERE faction = :faction");
         $query->execute(array(":faction" => $faction));
         
         if ($query->rowCount() == 0) { return false; }
@@ -81,7 +81,7 @@ class System {
     }
 
     private static function getRanks ($faction) {
-        $query = Database::getFactory()->getConnection(DB_NAME)->prepare("SELECT * FROM ranks WHERE faction = :faction");
+        $query = \Core\Database::getFactory()->getConnection(DB_NAME)->prepare("SELECT * FROM ranks WHERE faction = :faction");
         $query->execute(array(":faction" => $faction));
         
         if ($query->rowCount() == 0) { return false; }

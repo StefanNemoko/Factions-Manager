@@ -1,9 +1,11 @@
 <?php
 
+namespace Models;
+
 class Factions {
 
     public static function getMember($faction, $steamid) {
-        $query = Database::getFactory()->getConnection(DB_NAME)->prepare("SELECT * FROM members WHERE faction = :faction AND steamid = :steamid limit 1");
+        $query = \Core\Database::getFactory()->getConnection(DB_NAME)->prepare("SELECT * FROM members WHERE faction = :faction AND steamid = :steamid limit 1");
         $query->execute(array(
             ':faction' => $faction,
             ":steamid" => $steamid
@@ -15,7 +17,7 @@ class Factions {
 
     // Used as it checks the archived state...
     public static function isMember($faction, $steamid, $archive = 0) {
-        $query = Database::getFactory()->getConnection(DB_NAME)->prepare("SELECT * FROM members WHERE faction = :faction AND steamid = :steamid AND isArchive = :archive limit 1");
+        $query = \Core\Database::getFactory()->getConnection(DB_NAME)->prepare("SELECT * FROM members WHERE faction = :faction AND steamid = :steamid AND isArchive = :archive limit 1");
         $query->execute(array(
             ':faction' => $faction,
             ":steamid" => $steamid,
@@ -27,7 +29,7 @@ class Factions {
     }
 
     public static function isNameTaken($faction, $name) {
-        $query = Database::getFactory()->getConnection(DB_NAME)->prepare("SELECT * FROM members WHERE faction = :faction AND `name` = :name limit 1");
+        $query = \Core\Database::getFactory()->getConnection(DB_NAME)->prepare("SELECT * FROM members WHERE faction = :faction AND `name` = :name limit 1");
         $query->execute(array(
             ':faction' => $faction,
             ":steamid" => $name
@@ -38,7 +40,7 @@ class Factions {
     }
 
     public static function getFactionMembers($faction, $archive = 0) {
-        $query = Database::getFactory()->getConnection(DB_NAME)->prepare("SELECT * FROM members WHERE faction = :faction AND isArchive = :archive");
+        $query = \Core\Database::getFactory()->getConnection(DB_NAME)->prepare("SELECT * FROM members WHERE faction = :faction AND isArchive = :archive");
         $query->execute(array(
             ':faction' => $faction,
             ':archive' => $archive

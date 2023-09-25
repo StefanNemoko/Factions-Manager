@@ -5,10 +5,10 @@
                 <?php
                 $subButtons = array ();
                 $isFactionPage = false;
-                $steamid = Account::$steamid;
+                $steamid = \Core\Account::$steamid;
 
                 ?>
-                <li <?php if (View::ButtonActive("Dashboard")) { echo 'class = "active"'; } ?>>
+                <li <?php if (\Core\View::ButtonActive("Dashboard")) { echo 'class = "active"'; } ?>>
                     <a href="<?=URL?>">
                         Dashboard
                     </a>
@@ -19,7 +19,7 @@
                 foreach (Application::$factions as $faction) {
                     if (Factions::isMember($faction["abr"], $steamid)) {
                         ?>
-                        <li <?php if (View::ButtonActive(strtoupper($faction["abr"]))) { echo 'class = "active"'; $isFactionPage = true; $subButtons = (System::getSubpages($faction["abr"])); } ?>>
+                        <li <?php if (\Core\View::ButtonActive(strtoupper($faction["abr"]))) { echo 'class = "active"'; $isFactionPage = true; $subButtons = (System::getSubpages($faction["abr"])); } ?>>
                             <a href="<?=URL.$faction["abr"]?>/">
                                 <?=strtoupper($faction["abr"]);?>
                             </a>
@@ -32,11 +32,11 @@
                     }
                 };
                 
-                $adminLevel = Accounts::IsAdmin($steamid);
+                $adminLevel = \Models\Accounts::IsAdmin($steamid);
                 if ($adminLevel) {
                     ?>
                     <li <?php 
-                        if (View::ButtonActive("Admin")) { 
+                        if (\Core\View::ButtonActive("Admin")) { 
                             echo 'class = "active"'; 
 
                             $subButtons = array(array('admin/','Home'), array('admin/factions/','Factions'));
@@ -50,7 +50,7 @@
                 ?>
                 <div class = "profile">
                     <?php
-                    if (Account::isLoggedIn()) {
+                    if (\Core\Account::isLoggedIn()) {
                         ?>
                             <li>
                                 <?php
@@ -68,8 +68,8 @@
 
                                 ?>
                                 <a href="<?=$url?>">
-                                    <img class = "steam-pfp" src="<?=Session::get("steaminfo")["steam-pfp"];?>" alt="PFP" height="32" width="32">
-                                    <span><?=Session::get("steaminfo")["steam-name"];?></span>
+                                    <img class = "steam-pfp" src="<?=\Core\Session::get("steaminfo")["steam-pfp"];?>" alt="PFP" height="32" width="32">
+                                    <span><?=\Core\Session::get("steaminfo")["steam-name"];?></span>
                                 </a>
                             </li>
                             <li>
@@ -80,7 +80,7 @@
                         <?php
                     } else {
                         ?>
-                        <li <?php if (View::ButtonActive("Login")) {  echo 'class = "active"'; } ?>>
+                        <li <?php if (\Core\View::ButtonActive("Login")) {  echo 'class = "active"'; } ?>>
                             <a href="<?=URL.'login';?>">Login <span class="fas fa-sign-in-alt"></span></a>
                         </li>
                         <?php
@@ -99,7 +99,7 @@
                 <?php
                 foreach ($subButtons as $button) {
                     ?>
-                    <li <?php if (View::ButtonActive($button[1])) { echo 'class = "active"'; } ?>>
+                    <li <?php if (\Core\View::ButtonActive($button[1])) { echo 'class = "active"'; } ?>>
                         <a href="<?=URL.$button[0]?>">
                             <?=$button[1]?>
                         </a>

@@ -2,7 +2,7 @@
 
 Namespace Controllers;
 
-class controller extends \core\controller {
+class Controller extends \Core\Controller {
 
 }
 ?>
