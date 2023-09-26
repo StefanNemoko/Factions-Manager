@@ -6,10 +6,11 @@ class View {
     public static $forms = array();
     public static $isError = false;
 
+    public $css = null;
+    public $java = null;
+
     public function __construct($files, $data = null) {
         $title = Controller::$currentPage;
-        $this->css = null;
-        $this->java = null;
         if ($data) {
             foreach ($data as $key => $value) {
                 $this->{$key} = $value;
