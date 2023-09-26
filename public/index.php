@@ -5,6 +5,9 @@ ob_start(); // For the "remember session"...
 define("ROOT", dirname(__DIR__) . DIRECTORY_SEPARATOR);
 define("WEB", ROOT . 'public' . DIRECTORY_SEPARATOR);
 
+// .env file
+require_once ROOT . 'core/env.php';
+
 define('SETTING', require ROOT.'settings.php');
 define('LAN_OVERRIDE', require ROOT.'lang-override.php');
 define('Errors', ROOT.'errors.php');
