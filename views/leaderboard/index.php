@@ -26,6 +26,7 @@
                                         <td>'.$oLeader->playerid.'</td>
                                         <td>'.$oLeader->TotalMoney.'</td>
                                         <td>'.$oLeader->prestigeLevel.'</td>
+                                        <td>'.$oLeader->kills.'</td>
                                     </tr>
                                 ';
                             }

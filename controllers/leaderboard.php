@@ -18,9 +18,8 @@ class leaderboard extends Controller {
         $aLeaders = [];
 
         $oPhxclients = new Phxclients;
-        //TODO:: add a join query for table `phxstats_users` so we can see the kills aswell.
         // This are only all time records, we need to start recording monthly records aswell.
-        $aParams['aLeaders'] = $oPhxclients->orderBy('cash')->limit(10)->getResult();
+        $aParams['aLeaders'] = $oPhxclients->join('phxstats_users', 'uid', 'playerid')->groupBy('phxstats_users.uid')->orderBy('cash')->limit(10)->getResult();
         $aParams['aSections'] = array_keys(get_object_vars($aParams['aLeaders'][0]));
 
         Controller::buildPage(array(ROOT . 'views/navbar', ROOT . 'views/leaderboard/index'), $aParams);

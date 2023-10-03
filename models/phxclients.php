@@ -3,6 +3,7 @@
 class Phxclients {
 
     public $query = '';
+    private $table = '`phxclients`';
 
     /**
      * Adds a limit parameter to the query.
@@ -34,6 +35,23 @@ class Phxclients {
         return $this;
     }
 
+    /**
+     * Joins a table based on given keys
+     */
+    public function join(string $sTable, string $sPrimaryKey, string $sForeignKey): Phxclients
+    {
+        $this->query .= ' JOIN ' . $sTable . ' ON ' . $sTable.'.'.$sPrimaryKey . '=' . $this->table.'.'.$sForeignKey;
+
+        return $this;
+    }
+
+    public function groupBy(string $sColumn): Phxclients
+    {
+        $this->query .= ' GROUP BY ' . $sColumn;
+
+        return $this;
+    }
+
     public function getResult(): array
     {
         $aHost = [
@@ -42,35 +60,11 @@ class Phxclients {
             DB_PASS_LIFE
         ];
 
-        $this->query = 'SELECT name, playerid, SUM(bankacc + cash) as TotalMoney, prestigeLevel FROM `phxclients` ' . $this->query . ';';
-        
+        $this->query = 'SELECT name, playerid, SUM(bankacc + cash) as TotalMoney, prestigeLevel, SUM(phxstats_users.kills) as kills FROM ' . $this->table . ' ' . $this->query . ';';
+
         $query = Database::getFactory()->getConnection(DB_NAME_LIFE, $aHost)->prepare($this->query);
         $query->execute();
         $aResult = $query->fetchAll();
         return $aResult;
-    }
-
-
-
-    public static function getPowers($faction, $target) {
-        $query = Database::getFactory()->getConnection(DB_NAME)->prepare("SELECT * FROM powers WHERE (faction = :faction OR faction = '') AND active = 1");
-        $query->execute(array(":faction" => $faction));
-
-        if ($query->rowCount() == 0) { return false; }
-
-        $return = array();
-
-        foreach($query->fetchAll() as $power) {
-            if (
-                ($power->suspended == $target->isSuspended || $power->suspended == 2) && 
-                ($power->archived == $target->isArchive || $power->archived == 2) &&
-                ($power->blacklisted == $target->isBlacklisted || $power->blacklisted == 2) &&
-                (Form::canSubmitForm($power->form))
-               ) {
-                array_push($return, $power);
-            }
-        }
-
-        return $return;
     }
 }
