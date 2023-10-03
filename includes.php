@@ -28,3 +28,4 @@ include_once ROOT . "models/logs.php";
 include_once ROOT . "models/powers.php";
 include_once ROOT . "models/member.php";
 include_once ROOT . "models/units.php";
+include_once ROOT . "models/phxclients.php";

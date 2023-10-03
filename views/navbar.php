@@ -15,7 +15,7 @@
                 </li>
                 <?php
                 array_push($subButtons, array('','Home'));
-                
+                array_push($subButtons, array('/leaderboard', 'Leaderboard'));
                 foreach (Application::$factions as $faction) {
                     if (Factions::isMember($faction["abr"], $steamid)) {
                         ?>

@@ -47,3 +47,12 @@ require_once "../includes.php";
 Session::start();
 
 new Application;
+
+
+function dd(mixed $data):void
+{
+  echo "<pre style='background-color:black; color:white; line-height:1.2em; font-weight:normal; font:12px Monaco, Consolas, monospace; word-wrap: break-word; white-space: pre-wrap; position:relative; z-index:100000 display:block !important;'>";
+  print_r($data);
+  echo '<pre>';
+  die();
+}
