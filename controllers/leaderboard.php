@@ -12,15 +12,15 @@ class leaderboard extends Controller {
     /**
      * Return index page with all the leaders
      */
-    public function index () {
+    public function index() {
         $aParams = [];
-
-        $aLeaders = [];
-
         $oPhxclients = new Phxclients;
+
         // This are only all time records, we need to start recording monthly records aswell.
-        $aParams['aLeaders'] = $oPhxclients->join('phxstats_users', 'uid', 'playerid')->groupBy('phxstats_users.uid')->orderBy('cash')->limit(10)->getResult();
+        $aParams['aLeaders'] = $oPhxclients->join('phxstats_users', 'uid', 'playerid')->groupBy('phxstats_users.uid')->orderBy('totalMoney')->limit(10)->getResult();
         $aParams['aSections'] = array_keys(get_object_vars($aParams['aLeaders'][0]));
+
+        $aParams['aMonthlyLeaders'] = $oPhxclients->join('phxstats_users', 'uid', 'playerid')->groupBy('phxstats_users.uid')->orderBy('totalMoney')->limit(10)->getResult();
 
         Controller::buildPage(array(ROOT . 'views/navbar', ROOT . 'views/leaderboard/index'), $aParams);
     }

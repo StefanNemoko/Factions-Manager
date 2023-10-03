@@ -19,6 +19,7 @@ include_once ROOT . "controllers/home.php";
 include_once ROOT . "controllers/api.php";
 
 // Models
+include_once ROOT . "models/model.php";
 include_once ROOT . "models/accounts.php";
 include_once ROOT . "models/steam.php";
 include_once ROOT . "models/system.php";
